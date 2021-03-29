@@ -1,21 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { IconButton, Colors } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 
-const Header = () => {
+import * as Font from "expo-font";
+
+const Header = ({ goBack, func }) => {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const loadFonts = async () => {
+    await Font.loadAsync({ TimesNewRoman: require("../assets/TimesNew.otf") });
+    setFontsLoaded(true);
+  };
+  useEffect(() => {
+    loadFonts();
+  }, []);
+  if (!fontsLoaded) {
+    return null;
+  }
+  if (goBack !== false) {
+    return (
+      <View style={[styles.header, styles.row]}>
+        <View style={[styles.stuff, styles.row]}>
+          <IconButton
+            icon="keyboard-backspace"
+            size={30}
+            onPress={func}
+            style={styles.btn}
+          ></IconButton>
+        </View>
+      </View>
+    );
+  }
   return (
     <View style={[styles.header, styles.row]}>
       <View style={[styles.stuff, styles.row]}>
-        <View style={[styles.left, styles.row]}>
-          <IconButton
-            icon="menu"
-            size={30}
-            onPress={() => console.log("Pressed")}
-          />
-        </View>
-        <View style={[styles.right, styles.row]}>
-          <Text style={styles.title}>The News App</Text>
-        </View>
+        <IconButton
+          icon="menu"
+          size={30}
+          onPress={() => console.log("Pressed")}
+          style={styles.btn}
+        />
+        <Text style={styles.title}>The News App</Text>
       </View>
     </View>
   );
@@ -29,26 +53,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   stuff: {
-    // backgroundColor: "red",
-    width: 900,
+    width: "100%",
     marginTop: 30,
     padding: 10,
+    textAlign: "center",
   },
   row: {
     flexDirection: "row",
   },
-  left: {
-    width: "12%",
-    alignItems: "center",
-  },
-  right: {
-    width: "36%",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
   title: {
     fontSize: 30,
+    fontFamily: "TimesNewRoman",
+    fontWeight: "bold",
+    alignSelf: "center",
   },
+  btn: {},
 });
 
 export default Header;
