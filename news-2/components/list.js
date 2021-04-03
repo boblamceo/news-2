@@ -24,13 +24,15 @@ const List = ({ list, navigationObj }) => {
   }
   console.log("2", navigationObj);
   return (
-    <ScrollView style={{ height: "45%", width: "100%" }}>
+    <ScrollView style={{ height: "29%", width: "100%" }}>
       {list.map((curr, index) => (
         <ListItem key={index} bottomDivider>
           <ListItem.Content>
             <ListItem.Title
               style={styles.title}
-              onPress={() => navigationObj.navigate("Article")}
+              onPress={() =>
+                navigationObj.navigate("Article", { url: curr.url })
+              }
             >
               {curr.title}
             </ListItem.Title>

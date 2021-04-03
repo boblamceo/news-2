@@ -1,12 +1,20 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View, Image } from "react-native";
+import { WebView } from "react-native-webview";
 import Header from "./header";
 
-const Article = ({ navigation }) => {
+const Article = ({ navigation, route }) => {
+  const { url } = route.params;
+  console.log(url);
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Header goBack={true} func={() => navigation.navigate("Home")}></Header>
-      <Text>SUCCESSSSSSSSSSSSSSSS</Text>
+
+      <WebView
+        startInLoadingState={true}
+        source={{ uri: url }}
+        style={{ width: "100%", height: "50%" }}
+      />
     </View>
   );
 };

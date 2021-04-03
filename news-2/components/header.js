@@ -32,13 +32,7 @@ const Header = ({ goBack, func }) => {
   }
   return (
     <View style={[styles.header, styles.row]}>
-      <View style={[styles.stuff, styles.row]}>
-        <IconButton
-          icon="menu"
-          size={30}
-          onPress={() => console.log("Pressed")}
-          style={styles.btn}
-        />
+      <View style={[styles.stuff, styles.row, { justifyContent: "center" }]}>
         <Text style={styles.title}>The News App</Text>
       </View>
     </View>
@@ -67,7 +61,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
   },
-  btn: {},
 });
 
 export default Header;

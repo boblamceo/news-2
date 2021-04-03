@@ -6,7 +6,7 @@ import Header from "./header";
 import List from "./list";
 import * as Localization from "expo-localization";
 
-export default function Home({ navigation }) {
+export default function Sports({ navigation }) {
   const [news, setNews] = useState([]);
   const date = new Date();
   const currentDate = `${date.getUTCFullYear()}-${
@@ -15,7 +15,7 @@ export default function Home({ navigation }) {
   useEffect(() => {
     axios
       .get(
-        `https://newsapi.org/v2/top-headlines?country=${Localization.region}&from=${currentDate}&to=${currentDate}&sortBy=popularity&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
+        `https://newsapi.org/v2/top-headlines?category=sports&country=${Localization.region}&from=${currentDate}&to=${currentDate}&sortBy=popularity&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
       )
       .then((res) => {
         setNews(res.data.articles);
@@ -43,7 +43,7 @@ export default function Home({ navigation }) {
         console.log(trimmedTitle);
         return {
           title: trimmedTitle,
-          author: author === "null" ? `${author} - ${name}` : `${name}`,
+          author: `${author} - ${name}`,
           date: new Date(publishedAt),
           img:
             urlToImage ||
@@ -59,7 +59,7 @@ export default function Home({ navigation }) {
       const trimmedTitle = trim(title, "-", " ");
       return {
         title: trimmedTitle,
-        author: author === "null" ? `${author} - ${name}` : `${name}`,
+        author: `${author} - ${name}`,
         date: new Date(publishedAt),
         url,
       };
