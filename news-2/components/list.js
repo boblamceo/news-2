@@ -22,9 +22,8 @@ const List = ({ list, navigationObj }) => {
   if (!fontsLoaded) {
     return null;
   }
-  console.log("2", navigationObj);
   return (
-    <ScrollView style={{ height: "29%", width: "100%" }}>
+    <ScrollView style={{ height: "31%", width: "100%" }}>
       {list.map((curr, index) => (
         <ListItem key={index} bottomDivider>
           <ListItem.Content>

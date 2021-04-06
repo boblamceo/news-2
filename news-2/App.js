@@ -10,6 +10,7 @@ import Health from "./components/health";
 import Science from "./components/science";
 import Sports from "./components/sports";
 import Technology from "./components/technology";
+import Search from "./components/search";
 
 const Drawer = createDrawerNavigator();
 
@@ -39,6 +40,7 @@ export default function App() {
         <Drawer.Screen name="Science" component={Science} />
         <Drawer.Screen name="Sports" component={Sports} />
         <Drawer.Screen name="Technology" component={Technology} />
+        <Drawer.Screen name="Search" component={Search} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

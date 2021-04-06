@@ -5,7 +5,6 @@ import Header from "./header";
 
 const Article = ({ navigation, route }) => {
   const { url } = route.params;
-  console.log(url);
   return (
     <View style={{ flex: 1 }}>
       <Header goBack={true} func={() => navigation.navigate("Home")}></Header>

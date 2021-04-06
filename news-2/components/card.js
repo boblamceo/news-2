@@ -30,7 +30,7 @@ const CardComp = ({ title, date, author, img, navigationObj, url }) => {
 const styles = StyleSheet.create({
   card: {
     width: 300,
-    height: 430,
+    height: "100%",
   },
   paragraph: {
     color: "#808080",

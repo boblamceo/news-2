@@ -40,10 +40,9 @@ export default function Entertainment({ navigation }) {
     .map(
       ({ title, author, publishedAt, urlToImage, url, source: { name } }) => {
         const trimmedTitle = trim(title, "-", " ");
-        console.log(trimmedTitle);
         return {
           title: trimmedTitle,
-          author: `${author} - ${name}`,
+          author: author === "null" ? `${author} - ${name}` : `${name}`,
           date: new Date(publishedAt),
           img:
             urlToImage ||
@@ -64,7 +63,7 @@ export default function Entertainment({ navigation }) {
         url,
       };
     });
-  console.log("1", navigation);
+
   return (
     <View>
       <Header goBack={false}></Header>

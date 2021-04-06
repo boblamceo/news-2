@@ -40,7 +40,7 @@ export default function Home({ navigation }) {
     .map(
       ({ title, author, publishedAt, urlToImage, url, source: { name } }) => {
         const trimmedTitle = trim(title, "-", " ");
-        console.log(trimmedTitle);
+
         return {
           title: trimmedTitle,
           author: author === "null" ? `${author} - ${name}` : `${name}`,
@@ -64,7 +64,7 @@ export default function Home({ navigation }) {
         url,
       };
     });
-  console.log("1", navigation);
+
   return (
     <View>
       <Header goBack={false}></Header>
