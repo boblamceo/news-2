@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useMemo } from "react";
-import { StyleSheet, FlatList, View, TextInput } from "react-native";
+import { StyleSheet, FlatList, View, TextInput, Text } from "react-native";
 import CardComp from "./card";
 import Header from "./header";
 import List from "./list";
@@ -8,39 +8,49 @@ import * as Localization from "expo-localization";
 import ModalDropdown from "react-native-modal-dropdown";
 import * as countries from "i18n-iso-countries";
 import countryList from "react-select-country-list";
-
+import NoNews from "./noNews";
 export default function Search({ navigation }) {
+  countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
   const [news, setNews] = useState([]);
   const [query, setQuery] = useState("");
-  const [value, setValue] = useState(
+  const curr = countries.getName(Localization.region, "en", {
+    select: "official",
+  });
+  const [value, setValue] = useState(curr);
+  console.log(
     countries.getName(Localization.region, "en", { select: "official" }),
+    value,
   );
   const options = useMemo(() => countryList().getData(), []);
 
   const changeHandler = (value) => {
-    setValue(value);
+    setValue(options[value].label);
   };
-  countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
-  console.log();
-  const date = new Date();
-  const currentDate = `${date.getUTCFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getUTCDate()}`;
   const find = (search) => {
     axios
       .get(
         `https://newsapi.org/v2/top-headlines?q=${search}&country=${countries.getAlpha2Code(
           value,
           "en",
-        )}&from=${currentDate}&to=${currentDate}&sortBy=popularity&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
+        )}&sortBy=popularity&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
       )
       .then((res) => {
         setNews(res.data.articles);
       });
   };
   useEffect(() => {
+    if (value === "United States") {
+      setValue("United States of America");
+    }
     find(query);
-  }, []);
+  }, [query, value]);
+  console.log(
+    `https://newsapi.org/v2/top-headlines?q=${query}&country=${countries.getAlpha2Code(
+      value,
+      "en",
+    )}&sortBy=popularity&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
+    news,
+  );
   const trim = (original, trimmedChar, spaces) => {
     const splitted = original.split(spaces);
     const returnedArr = [];
@@ -88,7 +98,6 @@ export default function Search({ navigation }) {
         url,
       };
     });
-
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <Header goBack={false}></Header>
@@ -101,7 +110,9 @@ export default function Search({ navigation }) {
       </View>
       <View style={styles.dropWrapper}>
         <ModalDropdown
-          options={options.map((curr) => curr.label)}
+          options={options.map((curr) => {
+            return curr.label;
+          })}
           style={styles.dropdown}
           defaultValue={countries.getName(Localization.region, "en", {
             select: "official",
@@ -110,6 +121,7 @@ export default function Search({ navigation }) {
         />
       </View>
       <View style={styles.wrapper}>
+        {!news[0] ? <NoNews /> : null}
         <FlatList
           horizontal={true}
           data={hotnews}
@@ -129,7 +141,11 @@ export default function Search({ navigation }) {
           showsHorizontalScrollIndicator={false}
         ></FlatList>
       </View>
-      <List list={restNews} navigationObj={navigation}></List>
+      <List
+        list={restNews}
+        navigationObj={navigation}
+        listHeight={"31%"}
+      ></List>
     </View>
   );
 }

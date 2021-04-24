@@ -11,6 +11,7 @@ import Science from "./components/science";
 import Sports from "./components/sports";
 import Technology from "./components/technology";
 import Search from "./components/search";
+import Covid from "./components/covid";
 
 const Drawer = createDrawerNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
         <Drawer.Screen name="Sports" component={Sports} />
         <Drawer.Screen name="Technology" component={Technology} />
         <Drawer.Screen name="Search" component={Search} />
+        <Drawer.Screen name="Covid-19" component={Covid} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 import * as Font from "expo-font";
 
-const List = ({ list, navigationObj }) => {
+const List = ({ list, navigationObj, listHeight }) => {
   const currTime = (date) => {
     return `${date?.getHours()}:${
       date?.getMinutes() < 10
@@ -23,7 +23,7 @@ const List = ({ list, navigationObj }) => {
     return null;
   }
   return (
-    <ScrollView style={{ height: "31%", width: "100%" }}>
+    <ScrollView style={{ height: listHeight || "40%", width: "100%" }}>
       {list.map((curr, index) => (
         <ListItem key={index} bottomDivider>
           <ListItem.Content>
