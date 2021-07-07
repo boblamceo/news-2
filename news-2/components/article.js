@@ -7,7 +7,7 @@ const Article = ({ navigation, route }) => {
   const { url } = route.params;
   return (
     <View style={{ flex: 1 }}>
-      <Header goBack={true} func={() => navigation.navigate("Home")}></Header>
+      <Header goBack={true} func={() => navigation.goBack()}></Header>
 
       <WebView
         startInLoadingState={true}

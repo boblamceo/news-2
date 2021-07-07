@@ -16,7 +16,7 @@ const Header = ({ goBack, func }) => {
   if (!fontsLoaded) {
     return null;
   }
-  if (goBack !== false) {
+  if (goBack) {
     return (
       <View style={[styles.header, styles.row]}>
         <View style={[styles.stuff, styles.row]}>

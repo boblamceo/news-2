@@ -42,7 +42,12 @@ export default function Screen({ navigation, category }) {
         const trimmedTitle = trim(title, "-", " ");
         return {
           title: trimmedTitle,
-          author: author === "null" ? `${author} - ${name}` : `${name}`,
+          author:
+            author === "null"
+              ? `${author} - ${name}`
+              : typeof author === "object"
+              ? `${name}`
+              : `${name}`,
           date: new Date(publishedAt),
           img:
             urlToImage ||
@@ -58,7 +63,12 @@ export default function Screen({ navigation, category }) {
       const trimmedTitle = trim(title, "-", " ");
       return {
         title: trimmedTitle,
-        author: `${author} - ${name}`,
+        author:
+          author === "null"
+            ? `${author} - ${name}`
+            : typeof author === "object"
+            ? `${name}`
+            : `${name}`,
         date: new Date(publishedAt),
         url,
       };
