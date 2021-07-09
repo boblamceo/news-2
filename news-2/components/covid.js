@@ -7,16 +7,19 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import Header from "./header";
 import * as Font from "expo-font";
 import axios from "axios";
 import { vw } from "react-native-expo-viewport-units";
+import { LineChart } from "react-native-chart-kit";
 
 const Covid = React.memo(({ navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
+  const [time, setTime] = useState([]);
   const loadFonts = async () => {
     await Font.loadAsync({
       VRound: require("../assets/VarelaRound-Regular.ttf"),
@@ -38,6 +41,20 @@ const Covid = React.memo(({ navigation }) => {
     });
     loadFonts();
   }, [query, data]);
+  useEffect(() => {
+    axios
+      .get("https://disease.sh/v3/covid-19/historical/all?lastdays=all")
+      .then((res) => {
+        const first = Object.entries(res.data.cases);
+        const second = first.filter((curr) => {
+          const [one] = curr;
+          const regex = /\d*\/1\/\d\d/g;
+          return regex.test(one);
+        });
+        setTime(second);
+      });
+    loadFonts();
+  });
 
   if (!fontsLoaded) {
     return null;
@@ -51,18 +68,63 @@ const Covid = React.memo(({ navigation }) => {
         onChangeText={setQuery}
         style={styles.input}
       ></TextInput>
+      <LineChart
+        data={{
+          labels: ["January", "February", "March", "April", "May", "June"],
+          datasets: [
+            {
+              data: time ? (time || []).map((curr) => curr[0]) : [],
+            },
+          ],
+        }}
+        width={Dimensions.get("window").width} // from react-native
+        height={320}
+        yAxisLabel="$"
+        yAxisSuffix="k"
+        yAxisInterval={1} // optional, defaults to 1
+        chartConfig={{
+          backgroundColor: "#e26a00",
+          backgroundGradientFrom: "#fb8c00",
+          backgroundGradientTo: "#ffa726",
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          propsForDots: {
+            r: "6",
+            strokeWidth: "0.1",
+            stroke: "#ffa726",
+          },
+        }}
+      />
       <FlatList
         data={data}
         renderItem={({
           item: {
             country,
-            countryInfo: { flag },
+            countryInfo: { flag, lat, long },
+            deaths,
+            recovered,
+            todayCases,
+            active,
+            tests,
           },
         }) => {
           return (
             <TouchableOpacity
               style={styles.card}
-              onPress={() => navigation.navigate("Country")}
+              onPress={() =>
+                navigation.navigate("Country", {
+                  country,
+                  flag,
+                  deaths,
+                  recovered,
+                  todayCases,
+                  active,
+                  tests,
+                  lat,
+                  long,
+                })
+              }
             >
               <Image source={{ uri: flag }} style={styles.image}></Image>
               <Text
