@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import { ListItem } from "react-native-elements";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { ListItem, ThemeProvider } from "react-native-elements";
 import * as Font from "expo-font";
 
 const List = ({ list, navigationObj, listHeight }) => {
@@ -23,9 +23,18 @@ const List = ({ list, navigationObj, listHeight }) => {
     return null;
   }
   return (
-    <ScrollView style={{ height: listHeight || "40%", width: "100%" }}>
+    <ScrollView
+      style={{
+        height: listHeight || "40%",
+        width: "100%",
+      }}
+    >
       {list.map((curr, index) => (
-        <ListItem key={index} bottomDivider>
+        <ListItem
+          key={index}
+          bottomDivider
+          containerStyle={{ backgroundColor: "#000" }}
+        >
           <ListItem.Content>
             <ListItem.Title
               style={styles.title}
@@ -53,6 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: "TimesNewRoman",
     textDecorationLine: "underline",
+    color: "#fff",
   },
   subtitle: {
     color: "#808080",

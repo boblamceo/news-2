@@ -131,8 +131,16 @@ const SearchApp = () => {
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
-        <Drawer.Screen name="Covid-19" component={CovidApp} />
+      <Drawer.Navigator
+        drawerStyle={{
+          backgroundColor: "#111",
+        }}
+        drawerContentOptions={{
+          activeTintColor: "#fff",
+          activeBackgroundColor: "#2E8B57",
+          inactiveTintColor: "grey",
+        }}
+      >
         <Drawer.Screen name="Main" component={StackApp} />
         <Drawer.Screen name="Business" component={BusinessApp} />
         <Drawer.Screen name="Entertainment" component={EntertainmentApp} />
@@ -141,6 +149,7 @@ export default function App() {
         <Drawer.Screen name="Sports" component={SportsApp} />
         <Drawer.Screen name="Technology" component={TechnologyApp} />
         <Drawer.Screen name="Search" component={SearchApp} />
+        <Drawer.Screen name="Covid-19" component={CovidApp} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

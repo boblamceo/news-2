@@ -15,10 +15,15 @@ export default function Screen({ navigation, category }) {
   useEffect(() => {
     axios
       .get(
-        `https://newsapi.org/v2/top-headlines?category=${category}&country=${Localization.region}&from=${currentDate}&to=${currentDate}&sortBy=popularity&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
+        `https://newsapi.org/v2/top-headlines?category=${category}&country=${Localization.region}&from=${currentDate}&to=${currentDate}&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
       )
       .then((res) => {
-        setNews(res.data.articles);
+        console.log(res.data.articles);
+        setNews(
+          res.data.articles.filter(
+            ({ source }) => source.name !== "Google News",
+          ),
+        );
       });
   }, []);
   const trim = (original, trimmedChar, spaces) => {
@@ -75,8 +80,8 @@ export default function Screen({ navigation, category }) {
     });
 
   return (
-    <View>
-      <Header goBack={false}></Header>
+    <View style={{ flex: 1, backgroundColor: "#000" }}>
+      <Header goBack={false} navigation={navigation}></Header>
       <View style={styles.wrapper}>
         <FlatList
           horizontal={true}
@@ -97,7 +102,11 @@ export default function Screen({ navigation, category }) {
           showsHorizontalScrollIndicator={false}
         ></FlatList>
       </View>
-      <List list={restNews} navigationObj={navigation}></List>
+      <List
+        list={restNews}
+        navigationObj={navigation}
+        listHeight={"31%"}
+      ></List>
     </View>
   );
 }

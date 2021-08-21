@@ -17,10 +17,6 @@ export default function Search({ navigation }) {
     select: "official",
   });
   const [value, setValue] = useState(curr);
-  console.log(
-    countries.getName(Localization.region, "en", { select: "official" }),
-    value,
-  );
   const options = useMemo(() => countryList().getData(), []);
 
   const changeHandler = (value) => {
@@ -44,13 +40,7 @@ export default function Search({ navigation }) {
     }
     find(query);
   }, [query, value]);
-  console.log(
-    `https://newsapi.org/v2/top-headlines?q=${query}&country=${countries.getAlpha2Code(
-      value,
-      "en",
-    )}&sortBy=popularity&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
-    news,
-  );
+
   const trim = (original, trimmedChar, spaces) => {
     const splitted = original.split(spaces);
     const returnedArr = [];
@@ -99,8 +89,8 @@ export default function Search({ navigation }) {
       };
     });
   return (
-    <View style={{ backgroundColor: "white", height: "100%" }}>
-      <Header goBack={false}></Header>
+    <View style={{ backgroundColor: "#000", height: "100%" }}>
+      <Header goBack={false} navigation={navigation}></Header>
       <View style={styles.textInput}>
         <TextInput
           style={styles.input}
@@ -118,6 +108,7 @@ export default function Search({ navigation }) {
             select: "official",
           })}
           onSelect={changeHandler}
+          textStyle={{ color: "#fff" }}
         />
       </View>
       <View style={styles.wrapper}>
@@ -167,11 +158,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: "9.5%",
     marginBottom: 10,
+    borderColor: "#fff",
   },
   input: {
     width: "90%",
     height: "100%",
     fontSize: 16,
+    color: "#fff",
   },
   dropWrapper: {
     width: "100%",
@@ -182,5 +175,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
+    borderColor: "#fff",
   },
 });

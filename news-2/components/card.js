@@ -17,7 +17,10 @@ const CardComp = ({ title, date, author, img, navigationObj, url }) => {
             crop: { top: 100, bottom: 100 },
           }}
         />
-        <Title onPress={() => navigationObj.navigate("Article", { url })}>
+        <Title
+          onPress={() => navigationObj.navigate("Article", { url })}
+          style={{ color: "#fff" }}
+        >
           {title}
         </Title>
         <Paragraph style={styles.paragraph}>{currTime(date)}</Paragraph>
@@ -31,6 +34,7 @@ const styles = StyleSheet.create({
   card: {
     width: 300,
     height: "100%",
+    backgroundColor: "#000",
   },
   paragraph: {
     color: "#808080",

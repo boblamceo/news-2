@@ -7,32 +7,24 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
-  Dimensions,
+  ImageBackground,
 } from "react-native";
 import Header from "./header";
 import * as Font from "expo-font";
 import axios from "axios";
 import { vw } from "react-native-expo-viewport-units";
-import { LineChart } from "react-native-chart-kit";
+import Covid19 from "../assets/covid.jpeg";
 
 const Covid = React.memo(({ navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [data, setData] = useState([]);
   const [query, setQuery] = useState("");
-  const [time, setTime] = useState([]);
   const loadFonts = async () => {
     await Font.loadAsync({
       VRound: require("../assets/VarelaRound-Regular.ttf"),
     });
     setFontsLoaded(true);
   };
-  useEffect(() => {
-    const newd = data || [];
-    const newone = newd.filter((curr) => curr.country.includes(query));
-    setData(newone);
-
-    console.log("hi", query, data === newd, data);
-  }, [query]);
 
   useEffect(() => {
     axios.get("https://corona.lmao.ninja/v3/covid-19/countries").then((res) => {
@@ -40,21 +32,7 @@ const Covid = React.memo(({ navigation }) => {
       setData(newone);
     });
     loadFonts();
-  }, [query, data]);
-  useEffect(() => {
-    axios
-      .get("https://disease.sh/v3/covid-19/historical/all?lastdays=all")
-      .then((res) => {
-        const first = Object.entries(res.data.cases);
-        const second = first.filter((curr) => {
-          const [one] = curr;
-          const regex = /\d*\/1\/\d\d/g;
-          return regex.test(one);
-        });
-        setTime(second);
-      });
-    loadFonts();
-  });
+  }, [query]);
 
   if (!fontsLoaded) {
     return null;
@@ -62,88 +40,66 @@ const Covid = React.memo(({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header goBack={false}></Header>
-      <TextInput
-        value={query}
-        onChangeText={setQuery}
-        style={styles.input}
-      ></TextInput>
-      <LineChart
-        data={{
-          labels: ["January", "February", "March", "April", "May", "June"],
-          datasets: [
-            {
-              data: time ? (time || []).map((curr) => curr[0]) : [],
+      <Header goBack={false} navigation={navigation}></Header>
+      <ImageBackground source={Covid19} resizeMode="cover" style={{ flex: 1 }}>
+        <TextInput
+          value={query}
+          onChangeText={setQuery}
+          style={styles.input}
+        ></TextInput>
+        <FlatList
+          data={data}
+          style={styles.list}
+          renderItem={({
+            item: {
+              country,
+              countryInfo: { flag, lat, long },
+              deaths,
+              recovered,
+              active,
+              todayCases,
+              todayDeaths,
+              todayRecovered,
+              tests,
             },
-          ],
-        }}
-        width={Dimensions.get("window").width} // from react-native
-        height={320}
-        yAxisLabel="$"
-        yAxisSuffix="k"
-        yAxisInterval={1} // optional, defaults to 1
-        chartConfig={{
-          backgroundColor: "#e26a00",
-          backgroundGradientFrom: "#fb8c00",
-          backgroundGradientTo: "#ffa726",
-          decimalPlaces: 2, // optional, defaults to 2dp
-          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-          propsForDots: {
-            r: "6",
-            strokeWidth: "0.1",
-            stroke: "#ffa726",
-          },
-        }}
-      />
-      <FlatList
-        data={data}
-        renderItem={({
-          item: {
-            country,
-            countryInfo: { flag, lat, long },
-            deaths,
-            recovered,
-            todayCases,
-            active,
-            tests,
-          },
-        }) => {
-          return (
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() =>
-                navigation.navigate("Country", {
-                  country,
-                  flag,
-                  deaths,
-                  recovered,
-                  todayCases,
-                  active,
-                  tests,
-                  lat,
-                  long,
-                })
-              }
-            >
-              <Image source={{ uri: flag }} style={styles.image}></Image>
-              <Text
-                style={[
-                  styles.name,
-                  styles.text,
-                  {
-                    fontSize: vw(9),
-                  },
-                ]}
-                adjustsFontSizeToFit={true}
+          }) => {
+            return (
+              <TouchableOpacity
+                style={styles.card}
+                onPress={() => {
+                  navigation.navigate("Country", {
+                    country,
+                    flag,
+                    deaths,
+                    recovered,
+                    active,
+                    lat,
+                    long,
+                    todayCases,
+                    todayDeaths,
+                    todayRecovered,
+                    tests,
+                  });
+                }}
               >
-                {country}
-              </Text>
-            </TouchableOpacity>
-          );
-        }}
-        keyExtractor={({ country }) => country}
-      ></FlatList>
+                <Image source={{ uri: flag }} style={styles.image}></Image>
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      fontSize: vw(9),
+                    },
+                  ]}
+                  adjustsFontSizeToFit={true}
+                >
+                  {country}
+                </Text>
+              </TouchableOpacity>
+            );
+          }}
+          keyExtractor={({ country }) => country}
+        ></FlatList>
+      </ImageBackground>
     </View>
   );
 });
@@ -158,10 +114,14 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     borderRadius: 10,
+    padding: 10,
+    color: "white",
+    borderColor: "white",
   },
   text: {
     fontFamily: "VRound",
     margin: 20,
+    color: "white",
   },
   card: {
     borderWidth: 1,
@@ -169,6 +129,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     alignItems: "center",
+    borderColor: "white",
   },
   image: {
     width: 100,
