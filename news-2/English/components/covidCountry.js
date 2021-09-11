@@ -15,7 +15,7 @@ import {
   FontAwesome5,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import Covid from "../assets/covid.jpeg";
+import Covid from "../../assets/covid.jpeg";
 
 const covidCountry = ({ route, navigation }) => {
   const {
@@ -33,7 +33,7 @@ const covidCountry = ({ route, navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const loadFonts = async () => {
     await Font.loadAsync({
-      VRound: require("../assets/VarelaRound-Regular.ttf"),
+      VRound: require("../../assets/VarelaRound-Regular.ttf"),
     });
     setFontsLoaded(true);
   };

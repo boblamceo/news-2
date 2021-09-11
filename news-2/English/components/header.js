@@ -7,7 +7,9 @@ import * as Font from "expo-font";
 const Header = ({ goBack, func, navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const loadFonts = async () => {
-    await Font.loadAsync({ TimesNewRoman: require("../assets/TimesNew.otf") });
+    await Font.loadAsync({
+      TimesNewRoman: require("../../assets/TimesNew.otf"),
+    });
     setFontsLoaded(true);
   };
   useEffect(() => {
@@ -57,7 +59,7 @@ const Header = ({ goBack, func, navigation }) => {
             justifyContent: "center",
           }}
         >
-          <Text style={styles.title}>The News App</Text>
+          <Text style={styles.title}>BZ News</Text>
         </View>
         <View style={{ flex: 1 }}></View>
       </View>

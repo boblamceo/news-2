@@ -15,10 +15,9 @@ export default function Screen({ navigation, category }) {
   useEffect(() => {
     axios
       .get(
-        `https://newsapi.org/v2/top-headlines?category=${category}&country=${Localization.region}&from=${currentDate}&to=${currentDate}&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
+        `https://newsapi.org/v2/top-headlines?category=${category}&country=cn&from=${currentDate}&to=${currentDate}&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
       )
       .then((res) => {
-        console.log(res.data.articles);
         setNews(
           res.data.articles.filter(
             ({ source }) => source.name !== "Google News",

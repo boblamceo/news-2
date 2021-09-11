@@ -13,7 +13,7 @@ import Header from "./header";
 import * as Font from "expo-font";
 import axios from "axios";
 import { vw } from "react-native-expo-viewport-units";
-import Covid19 from "../assets/covid.jpeg";
+import Covid19 from "../../assets/covid.jpeg";
 
 const Covid = React.memo(({ navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -21,7 +21,7 @@ const Covid = React.memo(({ navigation }) => {
   const [query, setQuery] = useState("");
   const loadFonts = async () => {
     await Font.loadAsync({
-      VRound: require("../assets/VarelaRound-Regular.ttf"),
+      VRound: require("../../assets/VarelaRound-Regular.ttf"),
     });
     setFontsLoaded(true);
   };

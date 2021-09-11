@@ -4,7 +4,9 @@ import * as Font from "expo-font";
 const NoNews = () => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const loadFonts = async () => {
-    await Font.loadAsync({ TimesNewRoman: require("../assets/TimesNew.otf") });
+    await Font.loadAsync({
+      TimesNewRoman: require("../../assets/TimesNew.otf"),
+    });
     setFontsLoaded(true);
   };
   useEffect(() => {
@@ -15,22 +17,21 @@ const NoNews = () => {
   }
   return (
     <View style={styles.view}>
-      <Text style={styles.text}>No News Today!</Text>
+      <Text style={styles.text}>对不起，今天没有新闻!</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   view: {
-    backgroundColor: "#90ee90",
+    backgroundColor: "#FFCCCC",
     padding: 10,
     width: "100%",
     flexDirection: "row",
     justifyContent: "center",
     borderTopWidth: 2,
-    borderTopColor: "#3b5d17",
+    borderColor: "#cc0000",
     borderBottomWidth: 2,
-    borderBottomColor: "#3b5d17",
     marginTop: 10,
   },
   text: {

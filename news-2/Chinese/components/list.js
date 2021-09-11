@@ -13,7 +13,9 @@ const List = ({ list, navigationObj, listHeight }) => {
   };
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const loadFonts = async () => {
-    await Font.loadAsync({ TimesNewRoman: require("../assets/TimesNew.otf") });
+    await Font.loadAsync({
+      TimesNewRoman: require("../../assets/TimesNew.otf"),
+    });
     setFontsLoaded(true);
   };
   useEffect(() => {

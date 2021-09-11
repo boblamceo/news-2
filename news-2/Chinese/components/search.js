@@ -17,7 +17,70 @@ export default function Search({ navigation }) {
     select: "official",
   });
   const [value, setValue] = useState(curr);
-  const options = useMemo(() => countryList().getData(), []);
+
+  const supported = [
+    "Argentina",
+    "Australia",
+    "Austria",
+    "Belgium",
+    "Brazil",
+    "Bulgaria",
+    "Canada",
+    "China",
+    "Colombia",
+    "Cuba",
+    "Czech Republic",
+    "Egypt",
+    "France",
+    "Germany",
+    "Greece",
+    "Hong Kong",
+    "Hungary",
+    "India",
+    "Indonesia",
+    "Ireland",
+    "Israel",
+    "Italy",
+    "Japan",
+    "Latvia",
+    "Lithuania",
+    "Malaysia",
+    "Mexico",
+    "Morocco",
+    "Netherlands",
+    "New Zealand",
+    "Nigeria",
+    "Norway",
+    "Philippines",
+    "Poland",
+    "Portugal",
+    "Romania",
+    "Russia",
+    "Saudi Arabia",
+    "Serbia",
+    "Singapore",
+    "Slovakia",
+    "Slovenia",
+    "South Africa",
+    "South Korea",
+    "Sweden",
+    "Switzerland",
+    "Taiwan",
+    "Thailand",
+    "Turkey",
+    "UAE",
+    "Ukraine",
+    "United Kingdom",
+    "United States",
+    "Venuzuela",
+  ];
+  const options = useMemo(
+    () =>
+      countryList()
+        .getData()
+        .filter((curr) => supported.includes(curr.label)),
+    [],
+  );
 
   const changeHandler = (value) => {
     setValue(options[value].label);

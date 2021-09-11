@@ -9,7 +9,7 @@ const Map = ({ lat, long, data }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const loadFonts = async () => {
     await Font.loadAsync({
-      VRound: require("../assets/VarelaRound-Regular.ttf"),
+      VRound: require("../../assets/VarelaRound-Regular.ttf"),
     });
   };
   useEffect(() => {

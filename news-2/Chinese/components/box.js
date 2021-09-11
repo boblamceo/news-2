@@ -7,7 +7,7 @@ const Box = ({ color, icon, label, value, sticker }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const loadFonts = async () => {
     await Font.loadAsync({
-      VRound: require("../assets/VarelaRound-Regular.ttf"),
+      VRound: require("../../assets/VarelaRound-Regular.ttf"),
     });
     setFontsLoaded(true);
   };

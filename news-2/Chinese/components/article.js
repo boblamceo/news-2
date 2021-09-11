@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { View, Image } from "react-native";
 import { WebView } from "react-native-webview";
 import Header from "./header";
-import Load from "../assets/Load.gif";
+import Load from "../../assets/Load.gif";
 
 const Article = ({ navigation, route }) => {
   const { url } = route.params;
   const [loading, setLoading] = useState(false);
-  console.log(url);
   return (
     <View style={{ flex: 1 }}>
       <Header goBack={true} func={() => navigation.goBack()}></Header>
