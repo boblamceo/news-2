@@ -18,7 +18,6 @@ import Covid19 from "../../assets/covid.jpeg";
 const Covid = React.memo(({ navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [data, setData] = useState([]);
-  const [query, setQuery] = useState("");
   const country_list = [
     "阿富汗",
     "阿尔巴尼亚",
@@ -253,13 +252,12 @@ const Covid = React.memo(({ navigation }) => {
 
   useEffect(() => {
     axios.get("https://corona.lmao.ninja/v3/covid-19/countries").then((res) => {
-      const newone = res.data.filter((curr) => curr.country.includes(query));
-      const newer = newone.map((curr, index) => {
+      const newone = res.data.map((curr, index) => {
         let obj = { ...curr };
         delete obj.country;
         return { country: country_list[index], ...obj };
       });
-      setData(newer);
+      setData(newone);
     });
     loadFonts();
   });
@@ -271,11 +269,6 @@ const Covid = React.memo(({ navigation }) => {
     <View style={styles.container}>
       <Header goBack={false} navigation={navigation}></Header>
       <ImageBackground source={Covid19} resizeMode="cover" style={{ flex: 1 }}>
-        <TextInput
-          value={query}
-          onChangeText={setQuery}
-          style={styles.input}
-        ></TextInput>
         <FlatList
           data={data}
           style={styles.list}
@@ -338,15 +331,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flex: 1,
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    color: "white",
-    borderColor: "white",
-  },
   text: {
     fontFamily: "VRound",
     margin: 20,
@@ -355,7 +339,7 @@ const styles = StyleSheet.create({
   card: {
     borderWidth: 1,
     borderRadius: 10,
-    padding: 10,
+    padding: 5,
     flexDirection: "row",
     alignItems: "center",
     borderColor: "white",

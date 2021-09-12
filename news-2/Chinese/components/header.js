@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { IconButton } from "react-native-paper";
-
 import * as Font from "expo-font";
 
 const Header = ({ goBack, func, navigation }) => {
@@ -59,7 +58,7 @@ const Header = ({ goBack, func, navigation }) => {
             justifyContent: "center",
           }}
         >
-          <Text style={styles.title}>全球新闻快递</Text>
+          <Text style={styles.title}>全球新闻快递 </Text>
         </View>
         <View style={{ flex: 1 }}></View>
       </View>

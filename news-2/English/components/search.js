@@ -103,11 +103,9 @@ export default function Search({ navigation }) {
     }
     find(query);
   }, [query, value]);
-
   const trim = (original, trimmedChar, spaces) => {
     const splitted = original.split(spaces);
     const returnedArr = [];
-
     for (let i = 0; i < splitted.length; i++) {
       let current = splitted[i];
       if (current === trimmedChar) {
@@ -121,13 +119,11 @@ export default function Search({ navigation }) {
     setQuery(value);
     find(value);
   };
-
   const hotnews = news
     .slice(0, 5)
     .map(
       ({ title, author, publishedAt, urlToImage, url, source: { name } }) => {
         const trimmedTitle = trim(title, "-", " ");
-
         return {
           title: trimmedTitle,
           author: author === "null" ? `${author} - ${name}` : `${name}`,
@@ -139,7 +135,6 @@ export default function Search({ navigation }) {
         };
       },
     );
-
   const restNews = news
     .slice(5, news.length)
     .map(({ title, author, publishedAt, source: { name }, url }) => {
@@ -203,7 +198,6 @@ export default function Search({ navigation }) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   wrapper: {
     alignItems: "flex-start",

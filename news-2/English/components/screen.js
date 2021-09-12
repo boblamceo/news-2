@@ -4,7 +4,6 @@ import { StyleSheet, FlatList, View } from "react-native";
 import CardComp from "./card";
 import Header from "./header";
 import List from "./list";
-import * as Localization from "expo-localization";
 
 export default function Screen({ navigation, category }) {
   const [news, setNews] = useState([]);
@@ -15,7 +14,7 @@ export default function Screen({ navigation, category }) {
   useEffect(() => {
     axios
       .get(
-        `https://newsapi.org/v2/top-headlines?category=${category}&country=${Localization.region}&from=${currentDate}&to=${currentDate}&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
+        `https://newsapi.org/v2/top-headlines?category=${category}&country=US&from=${currentDate}&to=${currentDate}&apiKey=889fa0ba853e4b8394713d2c0cf908cb`,
       )
       .then((res) => {
         setNews(
